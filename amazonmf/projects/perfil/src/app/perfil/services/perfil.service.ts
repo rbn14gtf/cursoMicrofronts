@@ -7,8 +7,8 @@ import { Perfil } from '../models/perfil.model';
 export class PerfilService {
 
   private perfil:Perfil = {
-    nombre: 'INDRA Company',
-    correo: ' indracompany@indra.es'
+    nombre: 'Ruben Garcia Rivera',
+    correo: 'rgrivera@indra.es'
   }
 
   constructor() { }
