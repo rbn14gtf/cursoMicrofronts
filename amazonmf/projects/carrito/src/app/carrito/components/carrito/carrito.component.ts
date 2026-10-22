@@ -1,8 +1,9 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CarritoService } from '../../services/carrito.service';
-import { CommunicationService } from '@core-lib';
+import { CommunicationService, selectProductos, selectTotalPrice, selectTotalProducts } from '@core-lib';
 import { map, Observable, Observer, Subscription } from 'rxjs';
 import { ProductoEvent } from '@models';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-carrito',
@@ -12,7 +13,8 @@ import { ProductoEvent } from '@models';
 export class CarritoComponent implements OnInit, OnDestroy {
 
   private carrritoService = inject(CarritoService);
-  private comunicacionService = inject(CommunicationService)
+  private comunicacionService = inject(CommunicationService);
+  private store:Store= inject(Store);
 
   carrito: any[] = [];
   total = 0;
@@ -24,6 +26,10 @@ export class CarritoComponent implements OnInit, OnDestroy {
   private totalSub!:Subscription;
 
   productos$ = this.comunicacionService.producto$;
+
+  productosNgRx$:Observable<ProductoEvent[]> = this.store.select(selectProductos);
+   productosNumeroArticulos$: Observable<number> = this.store.select(selectTotalProducts);
+  productosPrecioTotal$: Observable<number> = this.store.select(selectTotalPrice);
 
   observerListaProductos: Observer<ProductoEvent[]> = {
     next: listaProductos => console.log('Nueva lista', listaProductos),
@@ -108,5 +114,10 @@ export class CarritoComponent implements OnInit, OnDestroy {
    */
   trackById(_index: number, item: any): number {
   return item.id;
+}
+
+borrarProducto(id:number)
+{
+  this.comunicacionService.eliminarProducto(id);
 }
 }
