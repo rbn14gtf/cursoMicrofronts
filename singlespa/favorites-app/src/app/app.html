@@ -1,0 +1,54 @@
+
+<h2>Favoritos</h2>
+
+@if (favorites.length === 0) {
+  <p class="empty">
+    No hay favoritos todavía.
+  </p>
+}
+
+@if (favorites.length > 0) {
+  <div class="favorites-list">
+
+    @for (item of favorites; track item.id) {
+      <div class="favorite-card">
+
+        <img
+          class="favorite-image"
+          [src]="item.image_url"
+          [alt]="item.title"
+        />
+
+        <div class="favorite-content">
+          <h3 class="favorite-title">{{ item.title }}</h3>
+
+          <p class="favorite-description">
+            {{ item.summary }}
+          </p>
+
+          <div class="favorite-actions">
+            <a
+              class="favorite-link"
+              [href]="item.url"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Leer más
+            </a>
+
+            <button
+              class="remove-btn"
+              (click)="removeFavorite(item.id)"
+            >
+              Quitar de favoritos
+            </button>
+          </div>
+        </div>
+
+      </div>
+    }
+
+  </div>
+}
+
+<router-outlet></router-outlet>
