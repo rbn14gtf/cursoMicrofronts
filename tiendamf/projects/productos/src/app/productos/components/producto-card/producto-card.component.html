@@ -1,0 +1,13 @@
+<div class="card">
+    <h3>{{ producto.nombre }}</h3>
+
+     <img [src]="producto.imagen" [alt]="producto.nombre">
+
+    <p>{{ producto.precio | currency:'EUR' }}</p>
+
+   
+
+    <button (click)="onAgregar()">
+        Agregar al carrito
+    </button>
+</div>
